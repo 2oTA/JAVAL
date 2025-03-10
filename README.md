@@ -68,17 +68,17 @@ class Task implements Runnable {
 
 # springMVC拦截器
 省略简单的springweb项目创建
-1.首先创建一个Interceptor类（Intercetptor/xxxInterceptor.class），就是存放拦截的条件的，
+1. 首先创建一个Interceptor类（Intercetptor/xxxInterceptor.class），就是存放拦截的条件的，
     > 别忘@Component注解
-2.这个Intercetpor要实现HandlerInterceptor接口，并且重写三个方法
+2. 这个Intercetpor要实现HandlerInterceptor接口，并且重写三个方法
     + `preHandle(...)    #方法执行前执行`
     + `postHandle(...)    #方法执行后执行`
     + `afterCompletion(...)    视图渲染结束后执行`
-3.在对应的方法中编写判断条件（preHandler返回true时候通过，flase是拒绝访问）
-4.接下来创建一个配置类，也就是 config/xxxCongig.class
-5.这个继承类要继承WebMvcConfig 看名字就是WebMVC的配置方法，并且还要在下一步重写的方法中用到刚刚创建的Interceptor，别忘@Autowired
-6.重写addInterceptor方法添加拦截
-7.用这个方法的参数registry添加步骤1的Interceptor类，然后.addPathPatterns("/**")添加要拦截的路径
+3. 在对应的方法中编写判断条件（preHandler返回true时候通过，flase是拒绝访问）
+4. 接下来创建一个配置类，也就是 config/xxxCongig.class
+5. 这个继承类要继承WebMvcConfig 看名字就是WebMVC的配置方法，并且还要在下一步重写的方法中用到刚刚创建的Interceptor，别忘@Autowired
+6. 重写addInterceptor方法添加拦截
+7. 用这个方法的参数registry添加步骤1的Interceptor类，然后.addPathPatterns("/**")添加要拦截的路径
 ```
 public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(loginInterceptor)
@@ -86,13 +86,13 @@ public void addInterceptors(InterceptorRegistry registry) {
 }
 ```
 ```flow
-st=>start: 开始访问网页
-cond1=>condition: 判断url是否在WebConfig被拦截
-cond2=>condition: 在Interceptor.preHandle(...)中判断
-e1=>end: 访问成功
-e2=>end: 访问失败（被拦截）
+st=>start: 用户登陆
+op=>operation: 登陆操作
+cond=>condition: 登陆成功 Yes or No?
+e=>end: 进入后台
 
-st->cond1->e1
-st->cond1->cond2->e2
-
+st->op->cond
+cond(yes)->e
+cond(no)->op
 ```
+
