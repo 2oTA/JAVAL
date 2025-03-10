@@ -75,7 +75,7 @@ class Task implements Runnable {
     + `postHandle(...)    #方法执行后执行`
     + `afterCompletion(...)    视图渲染结束后执行`
 3. 在对应的方法中编写判断条件（preHandler返回true时候通过，flase是拒绝访问）
-4. 接下来创建一个配置类，也就是 config/xxxCongig.class
+4. 接下来创建一个配置类，也就是 config/xxxConfig.class
 5. 这个继承类要继承WebMvcConfig 看名字就是WebMVC的配置方法，并且还要在下一步重写的方法中用到刚刚创建的Interceptor
    > 别忘@Autowired
 6. 重写addInterceptor方法添加拦截
